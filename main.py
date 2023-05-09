@@ -8,6 +8,27 @@ from tqdm import tqdm
 import matplotlib.ticker as plticker
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
+import matplotlib.pyplot as plt
+
+def plot_vertex_profiles(x_paths, sx_paths):
+    """
+    @param: x_paths is original mesh vertex profiles
+    @param: sx_paths is optimized mesh vertex profiles
+
+    Return:
+            saves equally spaced mesh vertex profiles
+            in directory '<PWD>/output/'
+    
+    Usage: Visualisation of the stabilised mesh vertex profiles vs the original mesh vertex profiles
+    """
+
+    # plot some vertex profiles
+    for i in range(0, x_paths.shape[0]):
+        for j in range(0, x_paths.shape[1], 10):
+            plt.plot(x_paths[i, j, :]) 
+            plt.plot(sx_paths[i, j, :])
+            plt.savefig(f'./output/plots/{str(i)}_{str(j)}.png')
+            plt.clf()
 
 PLOT = True
 COMPARE = True
@@ -26,18 +47,6 @@ def initialiseDistances(rowNumber, colNumber, x_motion_mesh, y_motion_mesh, rowW
         for row in range(rowNumber, rowNumber+2):
             distances.append([column*colWidth+x_motion_mesh[row, column], row*rowWidth+y_motion_mesh[row, column]])
     return distances
-def insertEntry(x, dictval, val1, val2):
-    if(x in dictval.keys()):
-        dictval[x].append(val1-val2)
-    else:
-        dictval[x] = [val1-val2]
-def addMedianFilter(mainDict, tempDict, meshDict):
-    for key in list(mainDict.keys()):
-        if(key in tempDict.keys()):
-            tempDict[key].sort()
-            meshDict[key] = mainDict[key]+tempDict[key][len(tempDict[key])//2]
-        else:
-            meshDict[key] = mainDict[key]
 def dist(a, b):
     """
     Returns the Euclidean distance between two points.
@@ -142,12 +151,8 @@ def update_profile(x_VP, y_VP, x_mesh, y_mesh):
     Returns:
         Appends x_mesh, y_mesh to x_VP, y_VP
     """
-
-    tmp_y = y_VP[:, :, -1] + y_mesh     
-    tmp_x = x_VP[:, :, -1] + x_mesh
-
-    y_VP = numpy.concatenate((y_VP, numpy.expand_dims(tmp_y, axis=2)), axis=2)
-    x_VP = numpy.concatenate((x_VP, numpy.expand_dims(tmp_x, axis=2)), axis=2)
+    y_VP = numpy.concatenate((y_VP, numpy.expand_dims(y_VP[:, :, -1] + y_mesh , axis=2)), axis=2)
+    x_VP = numpy.concatenate((x_VP, numpy.expand_dims(x_VP[:, :, -1] + x_mesh, axis=2)), axis=2)
     
     return x_VP, y_VP
 
