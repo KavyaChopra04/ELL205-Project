@@ -3,9 +3,6 @@ import cv2
 import numpy
 from scipy.signal import medfilt
 from time import time
-from trajectory_functions import optimize_trajectory
-from video_functions import capture_video, get_frame_warp, render_video
-from plotting_functions import plot_vertex_profiles
 from cvxpy import *
 from tqdm import tqdm
 import matplotlib.ticker as plticker
