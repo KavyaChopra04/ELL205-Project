@@ -1,8 +1,33 @@
-Clone the repo on your local machine, and create a folder visual, with 2 subdirectories, old_vectors and new_vectors.
-Create another folder, video, with another subdirectory out. 
-Create yet another folder, output, with image and plots as subdirectories. 
-Run 
-``` python main.py <path-to-video> ```
+Clone the repo on your local machine
+
+
+On Ubuntu, run:
+
+```
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+python3 Stabilization.py <path_to_video>
+
+```
+(Create a virtual environment to install dependencies, and then install those and run the file)
+
+On Windows, run:
+
+First, open Powershell with admin permissions and run 
+```Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force```
+Then, open the cloned repository in VS Code and run:
+
+```
+python3 -m venv env
+./env/Scripts/activate
+pip install -r requirements.txt
+python Stabilization.py <path_to_video>
+
+```
+
+For any doubt in running/setting up the project, please mail me at my IITD email address 
+
 
 Acknowledgements:
 https://github.com/sudheerachary/Mesh-Flow-Video-Stabilization/tree/master
